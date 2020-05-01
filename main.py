@@ -9,6 +9,15 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 class Handler:
+
+    def main(self):
+        builder = Gtk.Builder()
+        builder.add_from_file("SettingMenu.glade")
+        builder.connect_signals(Handler())
+        window = builder.get_object("window1")
+        window.show_all()
+        Gtk.main()
+
     # ウィンドウを閉じたとき
     def onDestroy(self, *args):
         Gtk.main_quit()
@@ -30,9 +39,12 @@ class Handler:
     def button5_clicked(self, button5):
         os.system('xfce4-power-manager-settings')
 
-    # System About
+    # System About (original)
     def button6_clicked(self, button6):
-        os.system('')
+        # よく分からないので一旦これで保留
+        import about
+        about.app.main()
+
 
     def button7_clicked(self, button7):
         os.system('system-config-printer')
@@ -65,7 +77,7 @@ class Handler:
     def button16_clicked(self, button16):
         os.system('xfce4-panel')
 
-    # xfceパネルフェッチ
+    # xfce panel fetch
     def button17_clicked(self, button17):
         os.system('')
 
@@ -144,11 +156,5 @@ class Handler:
     def button40_clicked(self, button40):
         os.system('xfce4-settings-editor')
 
-builder = Gtk.Builder()
-builder.add_from_file("SettingMenu.glade")
-builder.connect_signals(Handler())
-
-window = builder.get_object("window1")
-window.show_all()
-
-Gtk.main()
+app = Handler()
+app.main()
